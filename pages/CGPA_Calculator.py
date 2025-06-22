@@ -20,9 +20,14 @@ for i, semester_id in enumerate(st.session_state.semesters):
     )
     st.number_input("Credits Earned", key=f"credits_{semester_id}", min_value=0, step=1)
     st.number_input("GPA", key=f"gpa_{semester_id}", min_value=0.0, step=0.01, format="%.2f")
-    if st.button("Delete semester", key=f"delete_{semester_id}"):
+    if st.button("Delete Semester", key=f"delete_{semester_id}"):
         functions.delete_semester(semester_id)
     st.markdown("<hr>", unsafe_allow_html=True)  # optional divider
+
+# --- Add Button ---
+if st.button("Add Semester"):
+    functions.add_semester()
+
 # --- Calculate CGPA ---
 cgpa = functions.calculate_cgpa(st.session_state.semesters)
 st.markdown(
@@ -30,9 +35,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- Add and Reset Buttons ---
-if st.button("Add Semester"):
-    functions.add_semester()
-
+# --- Reset button ---
 if st.button("Reset All"):
     functions.trigger_reset()
