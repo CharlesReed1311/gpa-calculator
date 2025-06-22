@@ -75,46 +75,38 @@ def calculate_cgpa(semesters):
 
     for semester_id in semesters:
         gpa = st.session_state.get(f"gpa_{semester_id}", 0)
-        sem_credits = st.session_state.get(f"credits_{semester_id}")
+        sem_credits = st.session_state.get(f"credits_{semester_id}", 0)
 
         if gpa > 0 and sem_credits > 0:
             total_weighted_gpa += gpa * sem_credits
             total_credits += sem_credits
 
     if total_credits > 0:
-        raw_cgpa = total_weighted_gpa/total_credits
-        cgpa = round(raw_cgpa, 2)
-        return cgpa
-    else:
-        return None
-        
+        return round(total_weighted_gpa / total_credits, 2)
+    return None
+
 def add_semester():
     new_id = max(st.session_state.semesters) + 1 if st.session_state.semesters else 0
     st.session_state.semesters.append(new_id)
-    st.session_state.add_semester_flag = False
     st.rerun()
 
 def delete_semester(semester_id):
     if semester_id in st.session_state.semesters:
         st.session_state.semesters.remove(semester_id)
-    st.session_state.delete_semester_flag = None
     st.rerun()
 
 def cgpa_reset_all():
-    # Clear all semester inputs
+    # Clear semester inputs
     for key in list(st.session_state.keys()):
-        if key.startswith("credits_") or key.startswith("grade_"):
+        if key.startswith("credits_") or key.startswith("gpa_"):
             del st.session_state[key]
 
-    # Reset semester list to 2 fresh IDs
+    # Reset to 2 default semesters
     st.session_state.semesters = [0, 1]
 
-    # Remove previous flags
-    st.session_state.add_semester_flag = False
-    st.session_state.delete_semester_flag = None
+    # Clear flags
     st.session_state._reset_trigger = False
 
-    # Reset course input states to ensure blank fields
     for sid in st.session_state.semesters:
         st.session_state[f"credits_{sid}"] = 0
         st.session_state[f"gpa_{sid}"] = 0.00
