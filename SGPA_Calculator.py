@@ -55,7 +55,7 @@ for course_id in st.session_state.courses:
     
     with cols[0]:
         st.markdown(
-            f"<p style='text-align: center; font-weight: bold; font-size: 1.2rem;'>{st.session_state.courses.index(course_id)+1}.</p>",
+            f"<p style='text-align: center; font-weight: bold; font-size: 1.5rem;'>{st.session_state.courses.index(course_id)+1}.</p>",
             unsafe_allow_html=True
         )
     with cols[1]:
