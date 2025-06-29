@@ -6,7 +6,8 @@ import functions
 if st.session_state.get("_reset_trigger", False):
     functions.sgpa_reset_all()
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide", page_title="SGPA Calculator")
+
 st.markdown("<h1 style='text-align: center;'>SGPA Calculator</h1>", unsafe_allow_html=True)
 
 # --- Load grade mapping from JSON ---
